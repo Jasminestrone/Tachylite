@@ -1,0 +1,10 @@
+{
+  "port": 8000,
+  "host": "0.0.0.0",
+  "allow_edit_all": false,
+  "allow_file_creation": true,
+  "excluded_dirs": [".obsidian", "__pycache__", "_site", ".github"],
+  "excluded_files": ["server.py", "build_static.py", "deploy.sh", "deploy-tachylite.sh", "setup-autostart.sh", "tachylite.config.json"],
+  "allowed_upload_extensions": [".md", ".txt", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg"],
+  "poll_interval": 15
+}
