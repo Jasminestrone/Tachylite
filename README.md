@@ -1,6 +1,8 @@
 # Tachylite
+This project is sort of EOL, this is an internal tool I've been using that I wanted to publish because why not. It willl likely recieve more updates as I change it for my own personal use, however I cant guarantee a lot of support.
 
 A live [Obsidian](https://obsidian.md) vault viewer built with Flask. Drop it into any vault and browse, edit, and share your notes from a browser — on the same machine or across your local network.
+
 
 ## Quick start
 
