@@ -287,14 +287,32 @@ def patch_template(html, zip_name="notes.zip"):
     )
 
 
+    # --- last-edited tooltip on breadcrumb hover ---
+    last_edited_css = (
+        ".breadcrumb { position: relative; cursor: default; }\n"
+        ".breadcrumb .last-edited-tip {\n"
+        "  display: none; position: absolute; top: 100%; left: 0;\n"
+        "  margin-top: 4px; padding: 4px 10px;\n"
+        "  background: var(--bg-tertiary); color: var(--text-muted);\n"
+        "  font-size: 11px; border-radius: 4px; white-space: nowrap;\n"
+        "  border: 1px solid var(--border-strong);\n"
+        "  pointer-events: none; z-index: 100;\n"
+        "}\n"
+        ".breadcrumb:hover .last-edited-tip { display: block; }\n"
+    )
+    html = html.replace("</style>", last_edited_css + "</style>")
+
     html = html.replace(
         "currentNoteMtime = data.mtime;",
         "currentNoteMtime = data.mtime;\n"
-        "    if (data.mtime) {\n"
-        "      const d = new Date(data.mtime * 1000);\n"
-        "      const fmt = d.toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'}) + ' ' + d.toLocaleTimeString(undefined, {hour:'2-digit',minute:'2-digit'});\n"
-        "      breadcrumb.title = 'Last edited: ' + fmt;\n"
-        "    } else { breadcrumb.title = ''; }",
+        "    {\n"
+        "      let tip = breadcrumb.querySelector('.last-edited-tip');\n"
+        "      if (!tip) { tip = document.createElement('span'); tip.className = 'last-edited-tip'; breadcrumb.appendChild(tip); }\n"
+        "      if (data.mtime) {\n"
+        "        const d = new Date(data.mtime * 1000);\n"
+        "        tip.textContent = 'Last edited: ' + d.toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'}) + ' ' + d.toLocaleTimeString(undefined, {hour:'2-digit',minute:'2-digit'});\n"
+        "      } else { tip.textContent = ''; }\n"
+        "    }",
         1,
     )
 
