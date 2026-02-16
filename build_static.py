@@ -215,12 +215,7 @@ def patch_template(html, zip_name="notes.zip"):
 
     html = html.replace(
         "async function pollCheck() {",
-        "async function pollCheck() { return; // disabled in static mode\nif(false) {",
-    )
-
-    html = html.replace(
-        "setInterval(() => {\n  if (!pollPaused) pollCheck();\n}, 15000);",
-        "} // end disabled pollCheck",
+        "async function pollCheck() { return; // disabled in static mode\n// original body follows (unreachable):",
     )
 
 
@@ -289,6 +284,18 @@ def patch_template(html, zip_name="notes.zip"):
     html = html.replace(
         "window.location.href = '/api/download-all';",
         f"window.location.href = '{zip_name}';",
+    )
+
+
+    html = html.replace(
+        "currentNoteMtime = data.mtime;",
+        "currentNoteMtime = data.mtime;\n"
+        "    if (data.mtime) {\n"
+        "      const d = new Date(data.mtime * 1000);\n"
+        "      const fmt = d.toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'}) + ' ' + d.toLocaleTimeString(undefined, {hour:'2-digit',minute:'2-digit'});\n"
+        "      breadcrumb.title = 'Last edited: ' + fmt;\n"
+        "    } else { breadcrumb.title = ''; }",
+        1,
     )
 
 
