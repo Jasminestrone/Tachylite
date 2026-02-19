@@ -218,7 +218,7 @@ def auto_link_urls(text: str) -> str:
 def render_markdown(text: str) -> str:
     text = process_wikilinks(text)
     text = auto_link_urls(text)
-    extensions = ["fenced_code", "tables", "toc", "sane_lists", "nl2br"]
+    extensions = ["fenced_code", "tables", "toc", "sane_lists", "nl2br", "footnotes"]
     try:
         import pygments
         extensions.append("codehilite")
@@ -871,6 +871,27 @@ html, body { height: 100%; background: var(--bg-primary); color: var(--text); fo
 
 .markdown-body .task-list-item { list-style: none; margin-left: -1.5em; }
 
+.markdown-body .footnote {
+  font-size: .85em;
+  color: var(--text-muted);
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.markdown-body .footnote hr { display: none; }
+.markdown-body .footnote ol { padding-left: 1.5em; }
+.markdown-body .footnote li { margin-bottom: 4px; line-height: 1.5; }
+.markdown-body .footnote-ref {
+  font-size: .75em;
+  vertical-align: super;
+  line-height: 0;
+  text-decoration: none;
+}
+.markdown-body .footnote-backref {
+  text-decoration: none;
+  margin-left: 4px;
+  font-size: .85em;
+}
 
 .markdown-body pre code .kw, .markdown-body pre .kw { color: #c4a7e7; }
 .markdown-body pre code .st, .markdown-body pre .st { color: #9ccfd8; }
